@@ -1,3 +1,3 @@
 export const environment = {
-    apiUrl: 'http://127.0.0.1:8000/api',
-} 
+    apiUrl: 'https://projetoapi-62na.onrender.com/api',
+}
