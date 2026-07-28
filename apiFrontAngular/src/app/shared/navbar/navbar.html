@@ -1,0 +1,18 @@
+<nav class="navbar">
+    <a routerLink="/home" class="marca"> Usados Úteis</a>
+
+    @if (authService.estaAutenticado()) {
+    <div class="links">
+
+        <a routerLink="/home" routerLinkActive="ativo">Home</a>
+        <a routerLink="/dashboard" routerLinkActive="ativo">Dashboard</a>
+        <a routerLink="/lixeira" routerLinkActive="ativo">Lixeira</a>
+        <a routerLink="/produtos/novo" routerLinkActive="ativo">Novo</a>
+    </div>
+
+    <div class="area-utilizador">
+        <span class="nome">{{ authService.usuarioAtual()?.name }}</span>
+        <button (click)="sair()">Sair</button>
+    </div>
+    }
+</nav>

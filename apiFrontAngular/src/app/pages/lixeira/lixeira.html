@@ -1,0 +1,33 @@
+<div class="pagina">
+    <h1>Lixeira</h1>
+    <p class="subtitulo">Produtos apagados. Podes recuperá-los ou apagá-los para sempre.</p>
+
+    @if (mensagemErro()) {
+    <div class="erro-geral">{{ mensagemErro() }}</div>
+    }
+
+    @if (aCarregar()) {
+    <p>A carregar...</p>
+    } @else {
+    <div class="grelha">
+        @for (produto of produtos(); track produto.id) {
+        <div class="cartao-produto">
+            <img alt="" [src]="produto.imagem" [alt]="produto.nome"
+                onerror="this.src='https://placehold.co/300x200?text=Sem+imagem'" />
+            <div class="corpo">
+                <h3>{{ produto.nome }}</h3>
+                <p class="preco">{{ produto.preco | number: '1.2-2' }} Kz</p>
+                <p class="vendedor">De {{ produto.user.name }}</p>
+
+                <div class="acoes">
+                    <button class="botao-secundario" (click)="restaurar(produto)">Restaurar</button>
+                    <button class="botao-perigo" (click)="apagarPermanente(produto)">Apagar para sempre</button>
+                </div>
+            </div>
+        </div>
+        } @empty {
+        <p class="vazio">A lixeira está vazia.</p>
+        }
+    </div>
+    }
+</div>

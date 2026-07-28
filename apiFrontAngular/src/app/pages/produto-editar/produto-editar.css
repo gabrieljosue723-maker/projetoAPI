@@ -1,0 +1,91 @@
+.pagina {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 32px 24px;
+}
+
+.voltar {
+    display: inline-block;
+    margin-bottom: 16px;
+    color: var(--cor-texto-suave);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.cartao {
+    background: white;
+    padding: 32px;
+    border-radius: var(--radius);
+    box-shadow: var(--sombra);
+}
+
+h1 {
+    margin: 0 0 20px;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    margin-top: 16px;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    font-size: 15px;
+    resize: vertical;
+}
+
+input:focus,
+textarea:focus {
+    outline: 2px solid var(--cor-primaria);
+    outline-offset: 1px;
+}
+
+.erro-campo {
+    color: var(--cor-erro);
+    display: block;
+    margin-top: 4px;
+}
+
+.ajuda {
+    display: block;
+    margin-top: 6px;
+    color: var(--cor-texto-suave);
+    font-size: 12px;
+}
+
+.erro-geral {
+    background: #fef2f2;
+    color: var(--cor-erro);
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-top: 16px;
+    font-size: 14px;
+}
+
+button {
+    width: 100%;
+    margin-top: 24px;
+    padding: 12px;
+    background: var(--cor-primaria);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+button:hover:not(:disabled) {
+    background: var(--cor-primaria-escura);
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: default;
+}

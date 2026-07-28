@@ -1,0 +1,38 @@
+<div class="pagina">
+    <div class="cabecalho">
+        <div>
+            <h1>A minha dashboard</h1>
+            <p class="subtitulo">Os produtos criados</p>
+        </div>
+        <a routerLink="/produtos/novo" class="botao-primario"> Novo produto</a>
+    </div>
+
+    @if (mensagemErro()) {
+    <div class="erro-geral">{{ mensagemErro() }}</div>
+    }
+
+    @if (aCarregar()) {
+    <p>A carregar...</p>
+    } @else {
+    <div class="grelha">
+        @for (produto of meusProdutos(); track produto.id) {
+        <div class="cartao-produto">
+            <img alt="" [src]="produto.imagem" [alt]="produto.nome"
+                onerror="this.src='https://placehold.co/300x200?text=Sem+imagem'" />
+            <div class="corpo">
+                <h3>{{ produto.nome }}</h3>
+                <p class="descricao">{{ produto.descricao }}</p>
+                <p class="preco">{{ produto.preco | number: '1.2-2' }} Kz</p>
+
+                <div class="acoes">
+                    <a [routerLink]="['/produtos', produto.id, 'editar']" class="botao-secundario">Editar</a>
+                    <button class="botao-perigo" (click)="apagar(produto)">Apagar</button>
+                </div>
+            </div>
+        </div>
+        } @empty {
+        <p class="vazio">Ainda não criaste nenhum produto.</p>
+        }
+    </div>
+    }
+</div>

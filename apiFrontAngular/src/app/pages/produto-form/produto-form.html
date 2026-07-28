@@ -1,0 +1,36 @@
+<div class="pagina">
+    <a routerLink="/dashboard" class="voltar">&larr; Voltar</a>
+
+    <form class="cartao" [formGroup]="formulario" (ngSubmit)="guardar()">
+        <h1>Novo produto</h1>
+
+        <label for="nome">Nome</label>
+        <input id="nome" type="text" formControlName="nome" placeholder="Digite o nome" />
+        @if (formulario.get('nome')?.invalid && formulario.get('nome')?.touched) {
+        <small class="erro-campo">O nome é obrigatório.</small>
+        }
+
+        <label for="descricao">Descrição</label>
+        <textarea id="descricao" rows="3" formControlName="descricao" placeholder="Descreve o produto"></textarea>
+        @if (formulario.get('descricao')?.invalid && formulario.get('descricao')?.touched) {
+        <small class="erro-campo">A descrição é obrigatória.</small>
+        }
+
+        <label for="preco">Preço (Kz)</label>
+        <input id="preco" type="number" step="0.01" formControlName="preco" placeholder="Digite o preço" />
+        @if (formulario.get('preco')?.invalid && formulario.get('preco')?.touched) {
+        <small class="erro-campo">Indica um preço válido.</small>
+        }
+
+        <label for="imagem">Imagem</label>
+        <input id="imagem" type="file" accept="image/*" (change)="aoEscolherFicheiro($event)" />
+
+        @if (mensagemErro()) {
+        <div class="erro-geral">{{ mensagemErro() }}</div>
+        }
+
+        <button type="submit" [disabled]="aEnviar()">
+            {{ aEnviar() ? 'A guardar...' : 'Guardar produto' }}
+        </button>
+    </form>
+</div>

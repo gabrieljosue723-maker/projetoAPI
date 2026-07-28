@@ -1,0 +1,63 @@
+.navbar {
+    background: white;
+    border-bottom: 1px solid var(--cor-borda);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.marca {
+    font-weight: 700;
+    color: var(--cor-texto);
+    text-decoration: none;
+    font-size: 17px;
+    white-space: nowrap;
+}
+
+.links {
+    display: flex;
+    gap: 18px;
+    flex: 1;
+}
+
+.links a {
+    color: var(--cor-texto-suave);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 6px 0;
+    border-bottom: 2px solid transparent;
+}
+
+.links a:hover {
+    color: var(--cor-texto);
+}
+
+.links a.ativo {
+    color: var(--cor-primaria);
+    border-bottom-color: var(--cor-primaria);
+}
+
+.area-utilizador {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.nome {
+    font-size: 14px;
+    color: var(--cor-texto-suave);
+}
+
+button {
+    background: transparent;
+    border: 1px solid var(--cor-borda);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+button:hover {
+    background: var(--cor-fundo);
+}

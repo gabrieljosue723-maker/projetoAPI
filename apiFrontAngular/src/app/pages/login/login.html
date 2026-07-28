@@ -1,0 +1,28 @@
+<div class="pagina-login">
+    <form class="cartao" [formGroup]="formulario" (ngSubmit)="entrar()">
+        <h1>Entrar</h1>
+        <p class="subtitulo">Acede à tua conta para veres os teus produtos.</p>
+
+        <label for="email">Email</label>
+        <input id="email" type="email" formControlName="email" placeholder="Digite o seu email" />
+
+        @if (formulario.get('email')?.invalid && formulario.get('email')?.touched) {
+        <small class="erro-campo">Indica um email válido.</small>
+        }
+
+        <label for="password">Password</label>
+        <input id="password" type="password" formControlName="password" placeholder="Digite a sua password" />
+        @if (formulario.get('password')?.invalid && formulario.get('password')?.touched) {
+        <small class="erro-campo">A password é obrigatória.</small>
+        }
+
+        @if (mensagemErro()) {
+        <div class="erro-geral">{{ mensagemErro() }}</div>
+        }
+
+        <button type="submit" [disabled]="aEnviar()">
+            {{ aEnviar() ? 'A entrar...' : 'Entrar' }}
+        </button>
+
+    </form>
+</div>

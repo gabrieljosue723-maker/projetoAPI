@@ -1,0 +1,44 @@
+<div class="pagina">
+    <a routerLink="/dashboard" class="voltar">&larr; Voltar ao dashboard</a>
+
+    @if (aCarregar()) {
+    <p>A carregar produto...</p>
+    } @else {
+    <form class="cartao" [formGroup]="formulario" (ngSubmit)="guardar()">
+        <h1>Editar produto</h1>
+
+        <label for="nome">Nome</label>
+        <input id="nome" type="text" formControlName="nome" />
+        @if (formulario.get('nome')?.invalid && formulario.get('nome')?.touched) {
+        <small class="erro-campo">O nome é obrigatório.</small>
+        }
+
+        <label for="descricao">Descrição</label>
+        <textarea id="descricao" rows="3" formControlName="descricao"></textarea>
+        @if (formulario.get('descricao')?.invalid && formulario.get('descricao')?.touched) {
+        <small class="erro-campo">A descrição é obrigatória.</small>
+        }
+
+        <label for="preco">Preço (Kz)</label>
+        <input id="preco" type="number" step="0.01" formControlName="preco" />
+        @if (formulario.get('preco')?.invalid && formulario.get('preco')?.touched) {
+        <small class="erro-campo">Indica um preço válido.</small>
+        }
+
+        <label for="imagem">URL da imagem</label>
+        <input id="imagem" type="text" formControlName="imagem" />
+        <small class="ajuda">
+            O endpoint de edição só aceita um URL de texto para a imagem, não um novo
+            ficheiro (repara na regra 'imagem' =&gt; 'string' no ProdutosController@update).
+        </small>
+
+        @if (mensagemErro()) {
+        <div class="erro-geral">{{ mensagemErro() }}</div>
+        }
+
+        <button type="submit" [disabled]="aGuardar()">
+            {{ aGuardar() ? 'A guardar...' : 'Guardar alterações' }}
+        </button>
+    </form>
+    }
+</div>

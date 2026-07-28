@@ -1,0 +1,32 @@
+<div class="pagina">
+    <h1>Todos os produtos</h1>
+    <p class="subtitulo">Explore os nossos melhores produtos.</p>
+
+    @if (mensagemErro()) {
+    <div class="erro-geral">{{ mensagemErro() }}</div>
+    }
+
+    @if (aCarregar()) {
+    <p>A carregar produtos...</p>
+    } @else {
+    <div class="grelha">
+        @for (produto of produtos(); track produto.id) {
+        <div class="cartao-produto">
+            <img alt="" [src]="produto.imagem" [alt]="produto.nome"
+                onerror="this.src='https://placehold.co/300x200?text=Sem+imagem'" />
+            <div class="corpo">
+                <h3>{{ produto.nome }}</h3>
+                <p class="descricao">{{ produto.descricao }}</p>
+                <p class="preco">{{ produto.preco | number: '1.2-2' }} Kz</p>
+                <div class="vendedor">
+                    <img class="avatar" [src]="produto.user.foto ?? 'https://placehold.co/32x32?text=?'" alt="" />
+                    <span>{{ produto.user.name }}</span>
+                </div>
+            </div>
+        </div>
+        } @empty {
+        <p class="vazio">Ainda não há produtos criados.</p>
+        }
+    </div>
+    }
+</div>
