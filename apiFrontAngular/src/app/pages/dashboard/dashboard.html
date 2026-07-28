@@ -1,38 +1,79 @@
-<div class="pagina">
-    <div class="cabecalho">
-        <div>
-            <h1>A minha dashboard</h1>
-            <p class="subtitulo">Os produtos criados</p>
-        </div>
-        <a routerLink="/produtos/novo" class="botao-primario"> Novo produto</a>
-    </div>
+<div class="pagina-dashboard">
 
-    @if (mensagemErro()) {
-    <div class="erro-geral">{{ mensagemErro() }}</div>
-    }
-
-    @if (aCarregar()) {
-    <p>A carregar...</p>
-    } @else {
-    <div class="grelha">
-        @for (produto of meusProdutos(); track produto.id) {
-        <div class="cartao-produto">
-            <img alt="" [src]="produto.imagem" [alt]="produto.nome"
-                onerror="this.src='https://placehold.co/300x200?text=Sem+imagem'" />
-            <div class="corpo">
-                <h3>{{ produto.nome }}</h3>
-                <p class="descricao">{{ produto.descricao }}</p>
-                <p class="preco">{{ produto.preco | number: '1.2-2' }} Kz</p>
-
-                <div class="acoes">
-                    <a [routerLink]="['/produtos', produto.id, 'editar']" class="botao-secundario">Editar</a>
-                    <button class="botao-perigo" (click)="apagar(produto)">Apagar</button>
+    <!-- Faixa de boas-vindas -->
+    <div class="faixa-boas-vindas">
+        <div class="faixa-inner">
+            <div class="info-utilizador">
+                <div class="avatar-grande">
+                    {{ (nomeUtilizador).charAt(0).toUpperCase() }}
+                </div>
+                <div>
+                    <h1>Olá, {{ nomeUtilizador }}</h1>
+                    <p class="subtitulo">Gere os teus produtos publicados.</p>
                 </div>
             </div>
+            <a routerLink="/produtos/novo" class="botao-novo">Publicar novo produto</a>
         </div>
-        } @empty {
-        <p class="vazio">Ainda não criaste nenhum produto.</p>
+    </div>
+
+    <!-- Conteúdo -->
+    <div class="conteudo">
+
+        <!-- Estatística rápida -->
+        @if (!aCarregar()) {
+        <div class="estatisticas">
+            <div class="stat-chip">
+                <span class="stat-numero">{{ meusProdutos().length }}</span>
+                <span class="stat-label">{{ meusProdutos().length === 1 ? 'Produto publicado' : 'Produtos publicados' }}</span>
+            </div>
+        </div>
+        }
+
+        @if (mensagemErro()) {
+        <div class="erro-geral">{{ mensagemErro() }}</div>
+        }
+
+        @if (aCarregar()) {
+        <div class="grelha">
+            @for (i of [1,2,3,4]; track i) {
+            <div class="skeleton-card">
+                <div class="skeleton skeleton-img"></div>
+                <div class="skeleton-corpo">
+                    <div class="skeleton skeleton-titulo"></div>
+                    <div class="skeleton skeleton-texto"></div>
+                    <div class="skeleton-acoes">
+                        <div class="skeleton skeleton-btn"></div>
+                        <div class="skeleton skeleton-btn"></div>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+        } @else {
+        <div class="grelha">
+            @for (produto of meusProdutos(); track produto.id) {
+            <div class="cartao-produto">
+                <div class="cartao-imagem">
+                    <img [src]="produto.imagem" [alt]="produto.nome"
+                        onerror="this.src='https://placehold.co/400x220?text=Sem+imagem'" />
+                </div>
+                <div class="corpo">
+                    <h3>{{ produto.nome }}</h3>
+                    <p class="descricao">{{ produto.descricao }}</p>
+                    <p class="preco">{{ produto.preco | number: '1.2-2' }} Kz</p>
+                    <div class="acoes">
+                        <a [routerLink]="['/produtos', produto.id, 'editar']" class="botao-editar">Editar</a>
+                        <button class="botao-apagar" (click)="apagar(produto)">Apagar</button>
+                    </div>
+                </div>
+            </div>
+            } @empty {
+            <div class="estado-vazio">
+                <p class="vazio-titulo">Ainda não publicaste nenhum produto.</p>
+                <p class="vazio-desc">Clica em "Publicar novo produto" para começares.</p>
+            </div>
+            }
+        </div>
         }
     </div>
-    }
 </div>

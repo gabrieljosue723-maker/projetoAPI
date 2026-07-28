@@ -14,7 +14,11 @@ import { Produto } from '../../core/models/produto';
 })
 export class Dashboard implements OnInit {
     private produtoService = inject(ProdutoService);
-    private authService = inject(authService);
+    private authServiceInst = inject(authService);
+
+    get nomeUtilizador(): string {
+        return this.authServiceInst.usuarioAtual()?.name ?? 'Utilizador';
+    }
 
     todosOsProdutos = signal<Produto[]>([]);
     aCarregar = signal(true);
@@ -22,7 +26,7 @@ export class Dashboard implements OnInit {
 
 
     meusProdutos = computed(() => {
-        const meuEmail = this.authService.usuarioAtual()?.email;
+        const meuEmail = this.authServiceInst.usuarioAtual()?.email;
         return this.todosOsProdutos().filter((produto) => produto.user.email === meuEmail);
     });
 

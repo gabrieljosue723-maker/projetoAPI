@@ -1,28 +1,76 @@
 <div class="pagina-login">
-    <form class="cartao" [formGroup]="formulario" (ngSubmit)="entrar()">
-        <h1>Entrar</h1>
-        <p class="subtitulo">Acede à tua conta para veres os teus produtos.</p>
 
-        <label for="email">Email</label>
-        <input id="email" type="email" formControlName="email" placeholder="Digite o seu email" />
+    <!-- Painel esquerdo -->
+    <div class="painel-esquerdo">
+        <div class="painel-conteudo">
+            <div class="logo-login">Usados Úteis</div>
+            <h2 class="slogan">Compra e vende com facilidade.</h2>
+            <p class="descricao-slogan">
+                O marketplace de confiança para produtos usados em Angola.
+                Cria a tua conta e começa hoje mesmo.
+            </p>
 
-        @if (formulario.get('email')?.invalid && formulario.get('email')?.touched) {
-        <small class="erro-campo">Indica um email válido.</small>
-        }
+            <div class="destaques">
+                <div class="destaque-item">
+                    <span class="destaque-numero">+500</span>
+                    <span class="destaque-label">Produtos listados</span>
+                </div>
+                <div class="destaque-item">
+                    <span class="destaque-numero">+200</span>
+                    <span class="destaque-label">Vendedores activos</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <label for="password">Password</label>
-        <input id="password" type="password" formControlName="password" placeholder="Digite a sua password" />
-        @if (formulario.get('password')?.invalid && formulario.get('password')?.touched) {
-        <small class="erro-campo">A password é obrigatória.</small>
-        }
+    <!-- Painel direito (formulário) -->
+    <div class="painel-direito">
+        <form class="cartao" [formGroup]="formulario" (ngSubmit)="entrar()">
+            <div class="cabecalho-form">
+                <h1>Bem-vindo de volta</h1>
+                <p class="subtitulo">Inicia sessão para continuares a gerir os teus produtos.</p>
+            </div>
 
-        @if (mensagemErro()) {
-        <div class="erro-geral">{{ mensagemErro() }}</div>
-        }
+            <div class="grupo-campo">
+                <label for="email">Endereço de email</label>
+                <input
+                    id="email"
+                    type="email"
+                    formControlName="email"
+                    placeholder="exemplo@email.com"
+                    [class.campo-erro]="formulario.get('email')?.invalid && formulario.get('email')?.touched"
+                />
+                @if (formulario.get('email')?.invalid && formulario.get('email')?.touched) {
+                <small class="erro-campo">Indica um email válido.</small>
+                }
+            </div>
 
-        <button type="submit" [disabled]="aEnviar()">
-            {{ aEnviar() ? 'A entrar...' : 'Entrar' }}
-        </button>
+            <div class="grupo-campo">
+                <label for="password">Password</label>
+                <input
+                    id="password"
+                    type="password"
+                    formControlName="password"
+                    placeholder="A tua password"
+                    [class.campo-erro]="formulario.get('password')?.invalid && formulario.get('password')?.touched"
+                />
+                @if (formulario.get('password')?.invalid && formulario.get('password')?.touched) {
+                <small class="erro-campo">A password é obrigatória.</small>
+                }
+            </div>
 
-    </form>
+            @if (mensagemErro()) {
+            <div class="erro-geral">{{ mensagemErro() }}</div>
+            }
+
+            <button type="submit" class="botao-entrar" [disabled]="aEnviar()">
+                @if (aEnviar()) {
+                <span class="spinner"></span>
+                A entrar...
+                } @else {
+                Entrar na conta
+                }
+            </button>
+        </form>
+    </div>
 </div>

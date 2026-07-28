@@ -1,37 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
 :root {
+    /* Cores principais */
     --cor-primaria: #4f46e5;
-    --cor-primaria-escura: #4338ca;
+    --cor-primaria-escura: #3730a3;
+    --cor-primaria-clara: #818cf8;
+    --cor-primaria-suave: #eef2ff;
+
+    /* Gradientes */
+    --gradiente-primario: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    --gradiente-hero: linear-gradient(135deg, #3730a3 0%, #5b21b6 50%, #7c3aed 100%);
+    --gradiente-card: linear-gradient(180deg, rgba(255, 255, 255, 0) 60%, rgba(0, 0, 0, 0.04) 100%);
+
+    /* Fundo e superfícies */
     --cor-fundo: #f5f5f7;
-    --cor-texto: #1f2933;
+    --cor-fundo-2: #ededf0;
+    --cor-superficie: #ffffff;
+
+    /* Texto */
+    --cor-texto: #111827;
     --cor-texto-suave: #6b7280;
-    --cor-erro: #dc2626;
+    --cor-texto-menor: #9ca3af;
+
+    /* Borda */
     --cor-borda: #e5e7eb;
-    --radius: 12px;
-    --sombra: 0 4px 16px rgba(0, 0, 0, 0.06);
+    --cor-borda-foco: #a5b4fc;
+
+    /* Estado */
+    --cor-erro: #dc2626;
+    --cor-erro-fundo: #fef2f2;
+    --cor-sucesso: #16a34a;
+    --cor-sucesso-fundo: #f0fdf4;
+    --cor-aviso: #d97706;
+    --cor-aviso-fundo: #fffbeb;
+
+    /* Sombras */
+    --sombra-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --sombra: 0 4px 16px rgba(0, 0, 0, 0.07);
+    --sombra-md: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --sombra-lg: 0 20px 60px rgba(0, 0, 0, 0.12);
+    --sombra-cor: 0 8px 24px rgba(79, 70, 229, 0.25);
+
+    /* Bordas arredondadas */
+    --radius-sm: 8px;
+    --radius: 14px;
+    --radius-lg: 20px;
+    --radius-xl: 28px;
+    --radius-full: 9999px;
+
+    /* Transições */
+    --transicao: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transicao-lenta: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Tipografia */
+    --fonte: 'Inter', system-ui, -apple-system, sans-serif;
+
+    /* Layout */
+    --max-width: 1140px;
+    --navbar-height: 68px;
 }
 
-* {
+/* ── Reset & Base ── */
+*,
+*::before,
+*::after {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 html,
 body {
     height: 100%;
-    margin: 0;
 }
 
 body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-family: var(--fonte);
     background: var(--cor-fundo);
     color: var(--cor-texto);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
 }
 
+/* ── Links ── */
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: var(--transicao);
+}
+
+/* ── Formulários base ── */
 button {
     cursor: pointer;
-    font-family: inherit;
+    font-family: var(--fonte);
+    transition: var(--transicao);
+    border: none;
 }
 
 input,
-textarea {
-    font-family: inherit;
+textarea,
+select {
+    font-family: var(--fonte);
+    transition: var(--transicao);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+}
+
+/* ── Imagens ── */
+img {
+    display: block;
+    max-width: 100%;
+}
+
+/* ── Animações globais ── */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -400px 0;
+    }
+
+    100% {
+        background-position: 400px 0;
+    }
+}
+
+/* ── Skeleton (loading) ── */
+.skeleton {
+    background: linear-gradient(90deg, var(--cor-fundo) 25%, var(--cor-fundo-2) 50%, var(--cor-fundo) 75%);
+    background-size: 800px 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: var(--radius-sm);
+}
+
+/* ── Utilitários de layout ── */
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ── Scroll customizado ── */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--cor-fundo);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--cor-borda);
+    border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--cor-texto-suave);
 }

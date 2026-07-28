@@ -1,36 +1,88 @@
-<div class="pagina">
-    <a routerLink="/dashboard" class="voltar">&larr; Voltar</a>
+<div class="pagina-form">
 
-    <form class="cartao" [formGroup]="formulario" (ngSubmit)="guardar()">
-        <h1>Novo produto</h1>
+    <!-- Cabeçalho -->
+    <div class="cabecalho-pagina">
+        <div class="cabecalho-inner">
+            <a routerLink="/dashboard" class="voltar">&#8592; Voltar ao painel</a>
+            <h1>Publicar novo produto</h1>
+            <p class="subtitulo">Preenche os campos abaixo para listares o teu produto.</p>
+        </div>
+    </div>
 
-        <label for="nome">Nome</label>
-        <input id="nome" type="text" formControlName="nome" placeholder="Digite o nome" />
-        @if (formulario.get('nome')?.invalid && formulario.get('nome')?.touched) {
-        <small class="erro-campo">O nome é obrigatório.</small>
-        }
+    <!-- Formulário -->
+    <div class="conteudo">
+        <div class="layout-form">
 
-        <label for="descricao">Descrição</label>
-        <textarea id="descricao" rows="3" formControlName="descricao" placeholder="Descreve o produto"></textarea>
-        @if (formulario.get('descricao')?.invalid && formulario.get('descricao')?.touched) {
-        <small class="erro-campo">A descrição é obrigatória.</small>
-        }
+            <form class="cartao-form" [formGroup]="formulario" (ngSubmit)="guardar()">
 
-        <label for="preco">Preço (Kz)</label>
-        <input id="preco" type="number" step="0.01" formControlName="preco" placeholder="Digite o preço" />
-        @if (formulario.get('preco')?.invalid && formulario.get('preco')?.touched) {
-        <small class="erro-campo">Indica um preço válido.</small>
-        }
+                <div class="grupo-campo">
+                    <label for="nome">Nome do produto</label>
+                    <input id="nome" type="text" formControlName="nome" placeholder="Insira o nome do produto"
+                        [class.campo-erro]="formulario.get('nome')?.invalid && formulario.get('nome')?.touched" />
+                    @if (formulario.get('nome')?.invalid && formulario.get('nome')?.touched) {
+                    <small class="erro-campo">O nome é obrigatório.</small>
+                    }
+                </div>
 
-        <label for="imagem">Imagem</label>
-        <input id="imagem" type="file" accept="image/*" (change)="aoEscolherFicheiro($event)" />
+                <div class="grupo-campo">
+                    <label for="descricao">Descrição</label>
+                    <textarea id="descricao" rows="4" formControlName="descricao"
+                        placeholder="Descreve o produto, o seu estado e outros detalhes relevantes..."
+                        [class.campo-erro]="formulario.get('descricao')?.invalid && formulario.get('descricao')?.touched"></textarea>
+                    @if (formulario.get('descricao')?.invalid && formulario.get('descricao')?.touched) {
+                    <small class="erro-campo">A descrição é obrigatória.</small>
+                    }
+                </div>
 
-        @if (mensagemErro()) {
-        <div class="erro-geral">{{ mensagemErro() }}</div>
-        }
+                <div class="grupo-campo">
+                    <label for="preco">Preço (Kz)</label>
+                    <div class="input-preco-wrapper">
+                        <span class="prefixo-preco">Kz</span>
+                        <input id="preco" type="number" step="0.01" min="0" formControlName="preco"
+                            placeholder="Insira o preço do produto"
+                            [class.campo-erro]="formulario.get('preco')?.invalid && formulario.get('preco')?.touched" />
+                    </div>
+                    @if (formulario.get('preco')?.invalid && formulario.get('preco')?.touched) {
+                    <small class="erro-campo">Indica um preço válido.</small>
+                    }
+                </div>
 
-        <button type="submit" [disabled]="aEnviar()">
-            {{ aEnviar() ? 'A guardar...' : 'Guardar produto' }}
-        </button>
-    </form>
+                <div class="grupo-campo">
+                    <label for="imagem">Foto do produto</label>
+                    <div class="upload-area" (click)="inputImagem.click()">
+                        <input #inputImagem id="imagem" type="file" accept="image/*"
+                            (change)="aoEscolherFicheiro($event)" style="display:none" />
+                        <p class="upload-texto">Clica para escolher uma imagem</p>
+                        <p class="upload-sub">PNG, JPG ou WEBP — máx. 2MB</p>
+                    </div>
+                </div>
+
+                @if (mensagemErro()) {
+                <div class="erro-geral">{{ mensagemErro() }}</div>
+                }
+
+                <button type="submit" class="botao-guardar" [disabled]="aEnviar()">
+                    @if (aEnviar()) {
+                    <span class="spinner"></span> A guardar...
+                    } @else {
+                    Publicar produto
+                    }
+                </button>
+
+            </form>
+
+            <!-- Painel lateral de dicas -->
+            <aside class="painel-dicas">
+                <h3>Dicas para uma boa listagem</h3>
+                <ul>
+                    <li>Utiliza um nome claro e descritivo.</li>
+                    <li>Indica o estado do produto (novo, usado, danificado).</li>
+                    <li>Define um preço justo e realista.</li>
+                    <li>Adiciona uma fotografia de boa qualidade.</li>
+                    <li>Responde rapidamente às questões dos compradores.</li>
+                </ul>
+            </aside>
+
+        </div>
+    </div>
 </div>

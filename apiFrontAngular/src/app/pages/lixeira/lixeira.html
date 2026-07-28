@@ -1,33 +1,79 @@
-<div class="pagina">
-    <h1>Lixeira</h1>
-    <p class="subtitulo">Produtos apagados. Podes recuperá-los ou apagá-los para sempre.</p>
+<div class="pagina-lixeira">
 
-    @if (mensagemErro()) {
-    <div class="erro-geral">{{ mensagemErro() }}</div>
-    }
-
-    @if (aCarregar()) {
-    <p>A carregar...</p>
-    } @else {
-    <div class="grelha">
-        @for (produto of produtos(); track produto.id) {
-        <div class="cartao-produto">
-            <img alt="" [src]="produto.imagem" [alt]="produto.nome"
-                onerror="this.src='https://placehold.co/300x200?text=Sem+imagem'" />
-            <div class="corpo">
-                <h3>{{ produto.nome }}</h3>
-                <p class="preco">{{ produto.preco | number: '1.2-2' }} Kz</p>
-                <p class="vendedor">De {{ produto.user.name }}</p>
-
-                <div class="acoes">
-                    <button class="botao-secundario" (click)="restaurar(produto)">Restaurar</button>
-                    <button class="botao-perigo" (click)="apagarPermanente(produto)">Apagar para sempre</button>
-                </div>
+    <!-- Cabeçalho -->
+    <div class="cabecalho-pagina">
+        <div class="cabecalho-inner">
+            <div>
+                <h1>
+                    Lixeira
+                    @if (!aCarregar() && produtos().length > 0) {
+                    <span class="badge-contagem">{{ produtos().length }}</span>
+                    }
+                </h1>
+                <p class="subtitulo">Produtos apagados. Podes recuperá-los ou eliminá-los para sempre.</p>
             </div>
         </div>
-        } @empty {
-        <p class="vazio">A lixeira está vazia.</p>
+    </div>
+
+    <!-- Conteúdo -->
+    <div class="conteudo">
+
+        @if (mensagemErro()) {
+        <div class="erro-geral">{{ mensagemErro() }}</div>
+        }
+
+        @if (aCarregar()) {
+        <div class="grelha">
+            @for (i of [1,2,3]; track i) {
+            <div class="skeleton-card">
+                <div class="skeleton skeleton-img"></div>
+                <div class="skeleton-corpo">
+                    <div class="skeleton skeleton-titulo"></div>
+                    <div class="skeleton skeleton-texto"></div>
+                    <div class="skeleton-acoes">
+                        <div class="skeleton skeleton-btn"></div>
+                        <div class="skeleton skeleton-btn"></div>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+        } @else {
+        <div class="grelha">
+            @for (produto of produtos(); track produto.id) {
+            <div class="cartao-produto">
+                <div class="cartao-imagem">
+                    <img [src]="produto.imagem" [alt]="produto.nome"
+                        onerror="this.src='https://placehold.co/400x220?text=Sem+imagem'" />
+                    <div class="overlay-lixeira">Apagado</div>
+                </div>
+                <div class="corpo">
+                    <h3>{{ produto.nome }}</h3>
+                    <p class="preco">{{ produto.preco | number: '1.2-2' }} Kz</p>
+                    <p class="vendedor">Publicado por {{ produto.user.name }}</p>
+                    <div class="acoes">
+                        <button class="botao-restaurar" (click)="restaurar(produto)">Restaurar</button>
+                        <button class="botao-eliminar" (click)="apagarPermanente(produto)">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+            } @empty {
+            <div class="estado-vazio">
+                <div class="vazio-ilustracao">
+                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" width="80" height="80">
+                        <circle cx="32" cy="32" r="32" fill="#f3f4f6"/>
+                        <rect x="20" y="26" width="24" height="18" rx="3" fill="#d1d5db"/>
+                        <rect x="24" y="20" width="16" height="7" rx="2" fill="#9ca3af"/>
+                        <line x1="27" y1="31" x2="27" y2="39" stroke="#6b7280" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="32" y1="31" x2="32" y2="39" stroke="#6b7280" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="37" y1="31" x2="37" y2="39" stroke="#6b7280" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <p class="vazio-titulo">A lixeira está vazia.</p>
+                <p class="vazio-desc">Os produtos que apagares aparecerão aqui, antes de serem eliminados para sempre.</p>
+            </div>
+            }
+        </div>
         }
     </div>
-    }
 </div>

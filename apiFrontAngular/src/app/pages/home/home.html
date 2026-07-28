@@ -1,32 +1,62 @@
-<div class="pagina">
-    <h1>Todos os produtos</h1>
-    <p class="subtitulo">Explore os nossos melhores produtos.</p>
+<div class="pagina-home">
 
-    @if (mensagemErro()) {
-    <div class="erro-geral">{{ mensagemErro() }}</div>
-    }
+    <!-- Hero -->
+    <div class="hero">
+        <div class="hero-inner">
+            <h1>Todos os produtos</h1>
+            <p class="hero-subtitulo">Encontra as melhores ofertas de produtos usados em Angola.</p>
+        </div>
+    </div>
 
-    @if (aCarregar()) {
-    <p>A carregar produtos...</p>
-    } @else {
-    <div class="grelha">
-        @for (produto of produtos(); track produto.id) {
-        <div class="cartao-produto">
-            <img alt="" [src]="produto.imagem" [alt]="produto.nome"
-                onerror="this.src='https://placehold.co/300x200?text=Sem+imagem'" />
-            <div class="corpo">
-                <h3>{{ produto.nome }}</h3>
-                <p class="descricao">{{ produto.descricao }}</p>
-                <p class="preco">{{ produto.preco | number: '1.2-2' }} Kz</p>
-                <div class="vendedor">
-                    <img class="avatar" [src]="produto.user.foto ?? 'https://placehold.co/32x32?text=?'" alt="" />
-                    <span>{{ produto.user.name }}</span>
+    <!-- Conteúdo principal -->
+    <div class="conteudo">
+
+        @if (mensagemErro()) {
+        <div class="erro-geral">{{ mensagemErro() }}</div>
+        }
+
+        @if (aCarregar()) {
+        <div class="grelha">
+            @for (i of [1,2,3,4,5,6]; track i) {
+            <div class="skeleton-card">
+                <div class="skeleton skeleton-img"></div>
+                <div class="skeleton-corpo">
+                    <div class="skeleton skeleton-titulo"></div>
+                    <div class="skeleton skeleton-texto"></div>
+                    <div class="skeleton skeleton-preco"></div>
                 </div>
             </div>
+            }
         </div>
-        } @empty {
-        <p class="vazio">Ainda não há produtos criados.</p>
+        } @else {
+        <div class="grelha">
+            @for (produto of produtos(); track produto.id; let i = $index) {
+            <div class="cartao-produto">
+                @if (i < 3) { <span class="badge-novo">Recente</span>
+                    }
+                    <div class="cartao-imagem">
+                        <img [src]="produto.imagem" [alt]="produto.nome"
+                            onerror="this.src='https://placehold.co/400x260?text=Sem+imagem'" />
+                    </div>
+                    <div class="corpo">
+                        <h3>{{ produto.nome }}</h3>
+                        <p class="descricao">{{ produto.descricao }}</p>
+                        <div class="cartao-rodape">
+                            <span class="preco">{{ produto.preco | number: '1.2-2' }} Kz</span>
+                            <div class="vendedor">
+                                <div class="avatar-mini">{{ (produto.user.name ?? 'U').charAt(0).toUpperCase() }}</div>
+                                <span>{{ produto.user.name }}</span>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            } @empty {
+            <div class="estado-vazio">
+                <p class="vazio-titulo">Ainda não há produtos.</p>
+                <p class="vazio-desc">Sê o primeiro a publicar um produto no marketplace.</p>
+            </div>
+            }
+        </div>
         }
     </div>
-    }
 </div>
