@@ -75,10 +75,7 @@
 }
 
 .link-destaque:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
     box-shadow: 0 12px 28px rgba(79, 70, 229, 0.35) !important;
-    background: var(--cor-fundo) !important;
 }
 
 .area-utilizador {
