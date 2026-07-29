@@ -1,0 +1,85 @@
+<div class="pagina-login">
+    <div class="painel-direito">
+        <form class="cartao" [formGroup]="formulario" (ngSubmit)="criarConta()">
+            <div class="cabecalho-form">
+                <div class="logo-login-centro">Usados Úteis</div>
+                <h1>Cria a tua conta</h1>
+                <p class="subtitulo">Regista-te para começares a comprar e vender.</p>
+            </div>
+
+            <div class="grupo-campo">
+                <label for="name">Nome</label>
+                <input
+                    id="name"
+                    type="text"
+                    formControlName="name"
+                    placeholder="O teu nome"
+                    [class.campo-erro]="formulario.get('name')?.invalid && formulario.get('name')?.touched"
+                />
+                @if (formulario.get('name')?.invalid && formulario.get('name')?.touched) {
+                <small class="erro-campo">Indica o teu nome (mínimo 2 letras).</small>
+                }
+            </div>
+
+            <div class="grupo-campo">
+                <label for="email">Endereço de email</label>
+                <input
+                    id="email"
+                    type="email"
+                    formControlName="email"
+                    placeholder="exemplo@email.com"
+                    [class.campo-erro]="formulario.get('email')?.invalid && formulario.get('email')?.touched"
+                />
+                @if (formulario.get('email')?.invalid && formulario.get('email')?.touched) {
+                <small class="erro-campo">Indica um email válido.</small>
+                }
+            </div>
+
+            <div class="grupo-campo">
+                <label for="password">Password</label>
+                <input
+                    id="password"
+                    type="password"
+                    formControlName="password"
+                    placeholder="Mínimo 8 caracteres"
+                    [class.campo-erro]="formulario.get('password')?.invalid && formulario.get('password')?.touched"
+                />
+                @if (formulario.get('password')?.invalid && formulario.get('password')?.touched) {
+                <small class="erro-campo">A password precisa de pelo menos 8 caracteres.</small>
+                }
+            </div>
+
+            <div class="grupo-campo">
+                <label for="password_confirmation">Confirmar password</label>
+                <input
+                    id="password_confirmation"
+                    type="password"
+                    formControlName="password_confirmation"
+                    placeholder="Repete a password"
+                    [class.campo-erro]="formulario.errors?.['passwordsDiferentes'] && formulario.get('password_confirmation')?.touched"
+                />
+                @if (formulario.errors?.['passwordsDiferentes'] && formulario.get('password_confirmation')?.touched) {
+                <small class="erro-campo">As passwords não coincidem.</small>
+                }
+            </div>
+
+            @if (mensagemErro()) {
+            <div class="erro-geral">{{ mensagemErro() }}</div>
+            }
+
+            <button type="submit" class="botao-entrar" [disabled]="aEnviar()">
+                @if (aEnviar()) {
+                <span class="spinner"></span>
+                A criar conta...
+                } @else {
+                Criar conta
+                }
+            </button>
+
+            <p class="texto-rodape">
+                Já tens conta?
+                <a routerLink="/login" class="link-criar-conta">Entrar</a>
+            </p>
+        </form>
+    </div>
+</div>

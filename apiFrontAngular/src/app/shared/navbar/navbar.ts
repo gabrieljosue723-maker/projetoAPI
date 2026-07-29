@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { authService } from '../../core/services/auth';
+import { CarrinhoService } from '../../core/services/carrinho';
 
 @Component({
   selector: 'app-navbar',
@@ -8,8 +9,15 @@ import { authService } from '../../core/services/auth';
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
-export class Navbar {
+export class Navbar implements OnInit {
   authService = inject(authService);
+  carrinhoService = inject(CarrinhoService);
+
+  ngOnInit(): void {
+    if (this.authService.estaAutenticado()) {
+      this.carrinhoService.carregar().subscribe();
+    }
+  }
 
   sair(): void {
     this.authService.logout();

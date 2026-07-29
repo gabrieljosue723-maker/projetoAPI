@@ -20,6 +20,12 @@ export class authService {
         return this.http.post<LoginResponse>(`${environment.apiUrl}/login`, { email, password }).pipe(tap((resposta) => localStorage.setItem(CHAVE_TOKEN, resposta.access_token)));
     }
 
+    registar(name: string, email: string, password: string, password_confirmation: string): Observable<LoginResponse> {
+        return this.http
+            .post<LoginResponse>(`${environment.apiUrl}/register`, { name, email, password, password_confirmation })
+            .pipe(tap((resposta) => localStorage.setItem(CHAVE_TOKEN, resposta.access_token)));
+    }
+
     carregarPerfil(): Observable<Usuario> {
         return this.http.get<Usuario>(`${environment.apiUrl}/perfil`).pipe(tap((usuario) => this.usuarioAtual.set(usuario)));
     }

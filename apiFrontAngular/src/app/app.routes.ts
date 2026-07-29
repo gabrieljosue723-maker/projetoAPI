@@ -11,6 +11,10 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/login/login').then((m) => m.Login),
     },
     {
+        path: 'registar',
+        loadComponent: () => import('./pages/registar/registar').then((m) => m.Registar),
+    },
+    {
         path: 'home',
         canActivate: [authGuard],
         loadComponent: () => import('./pages/home/home').then((m) => m.Home),
@@ -37,6 +41,11 @@ export const routes: Routes = [
         path: 'lixeira',
         canActivate: [authGuard],
         loadComponent: () => import('./pages/lixeira/lixeira').then((m) => m.Lixeira),
+    },
+    {
+        path: 'carrinho',
+        canActivate: [authGuard],
+        loadComponent: () => import('./pages/carrinho/carrinho').then((m) => m.Carrinho),
     },
 
     { path: '**', redirectTo: 'home' },

@@ -1,19 +1,21 @@
 import { Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { authService } from '../../core/services/auth';
+import { CarrinhoService } from '../../core/services/carrinho';
 
 
 @Component({
     selector: 'app-login',
     standalone: true,
-    imports: [ReactiveFormsModule],
+    imports: [ReactiveFormsModule, RouterLink],
     templateUrl: './login.html',
     styleUrl: './login.css',
 })
 export class Login {
     private fb = inject(FormBuilder);
     private authService = inject(authService);
+    private carrinhoService = inject(CarrinhoService);
     private router = inject(Router);
 
     mensagemErro = signal<string | null>(null);
@@ -21,8 +23,8 @@ export class Login {
 
 
     formulario = this.fb.group({
-        email: ['gabi@gmail.com', [Validators.required, Validators.email]],
-        password: ['123456789', [Validators.required]],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required]],
     });
 
     entrar(): void {
@@ -41,6 +43,7 @@ export class Login {
 
                 this.authService.carregarPerfil().subscribe({
                     next: () => {
+                        this.carrinhoService.carregar().subscribe();
                         this.aEnviar.set(false);
                         this.router.navigate(['/home']);
                     },

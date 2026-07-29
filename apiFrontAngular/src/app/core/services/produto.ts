@@ -1,16 +1,34 @@
 import { Injectable, inject } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { environment } from "../../../environment/environmente";
 import { Produto } from "../models/produto";
+
+export interface FiltrosProduto {
+    nome?: string;
+    preco_min?: number | null;
+    preco_max?: number | null;
+}
 
 @Injectable({ providedIn: 'root' })
 export class ProdutoService {
     private http = inject(HttpClient);
     private baseUrl = `${environment.apiUrl}/produtos`;
 
-    listar(): Observable<{ data: Produto[] }> {
-        return this.http.get<{ data: Produto[] }>(this.baseUrl);
+    listar(filtros?: FiltrosProduto): Observable<{ data: Produto[] }> {
+        let params = new HttpParams();
+
+        if (filtros?.nome) {
+            params = params.set('nome', filtros.nome);
+        }
+        if (filtros?.preco_min !== null && filtros?.preco_min !== undefined) {
+            params = params.set('preco_min', filtros.preco_min);
+        }
+        if (filtros?.preco_max !== null && filtros?.preco_max !== undefined) {
+            params = params.set('preco_max', filtros.preco_max);
+        }
+
+        return this.http.get<{ data: Produto[] }>(this.baseUrl, { params });
     }
 
     listarLixeira(): Observable<{ data: Produto[] }> {

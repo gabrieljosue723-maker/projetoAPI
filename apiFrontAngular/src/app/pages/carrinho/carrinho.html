@@ -1,0 +1,94 @@
+<div class="pagina-carrinho">
+    <div class="hero-carrinho">
+        <div class="hero-inner">
+            <h1>O teu carrinho</h1>
+            <p class="hero-subtitulo">Revê os produtos antes de finalizar a compra.</p>
+        </div>
+    </div>
+
+    <div class="conteudo">
+        @if (mensagemErro()) {
+        <div class="erro-geral">{{ mensagemErro() }}</div>
+        }
+
+        @if (aCarregar()) {
+        <div class="skeleton-lista">
+            @for (i of [1,2,3]; track i) {
+            <div class="skeleton-linha"></div>
+            }
+        </div>
+        } @else {
+
+        @if (carrinhoService.itens().length === 0) {
+        <div class="estado-vazio">
+            <p class="vazio-titulo">O teu carrinho está vazio.</p>
+            <p class="vazio-desc">Explora o marketplace e adiciona produtos ao carrinho.</p>
+            <a routerLink="/home" class="botao-ir-home">Ver produtos</a>
+        </div>
+        } @else {
+
+        <div class="layout-carrinho">
+            <div class="lista-itens">
+                @for (item of carrinhoService.itens(); track item.id) {
+                <div class="item-carrinho" [class.item-a-atualizar]="idsAAtualizar().has(item.id)">
+                    <div class="item-imagem">
+                        <img [src]="item.produto.imagem" [alt]="item.produto.nome"
+                            onerror="this.src='https://placehold.co/120x120?text=Sem+imagem'" />
+                    </div>
+
+                    <div class="item-info">
+                        <h3>{{ item.produto.nome }}</h3>
+                        <p class="item-vendedor">Vendido por {{ item.produto.user.name }}</p>
+                        <span class="item-preco-unit">{{ item.produto.preco | number: '1.2-2' }} Kz / unidade</span>
+                    </div>
+
+                    <div class="item-quantidade">
+                        <button
+                            type="button"
+                            class="botao-qtd"
+                            (click)="alterarQuantidade(item.id, item.quantidade, -1)"
+                            [disabled]="idsAAtualizar().has(item.id) || item.quantidade <= 1"
+                        >−</button>
+                        <span class="qtd-valor">{{ item.quantidade }}</span>
+                        <button
+                            type="button"
+                            class="botao-qtd"
+                            (click)="alterarQuantidade(item.id, item.quantidade, 1)"
+                            [disabled]="idsAAtualizar().has(item.id)"
+                        >+</button>
+                    </div>
+
+                    <div class="item-subtotal">
+                        {{ item.subtotal | number: '1.2-2' }} Kz
+                    </div>
+
+                    <button
+                        type="button"
+                        class="botao-remover"
+                        (click)="remover(item.id)"
+                        [disabled]="idsAAtualizar().has(item.id)"
+                        title="Remover do carrinho"
+                    >✕</button>
+                </div>
+                }
+            </div>
+
+            <div class="resumo-carrinho">
+                <h2>Resumo</h2>
+                <div class="linha-resumo">
+                    <span>Total de itens</span>
+                    <span>{{ carrinhoService.quantidadeTotal() }}</span>
+                </div>
+                <div class="linha-resumo linha-total">
+                    <span>Total</span>
+                    <span>{{ carrinhoService.total() | number: '1.2-2' }} Kz</span>
+                </div>
+
+                <button type="button" class="botao-finalizar">Finalizar compra</button>
+                <button type="button" class="botao-limpar" (click)="limparCarrinho()">Esvaziar carrinho</button>
+            </div>
+        </div>
+        }
+        }
+    </div>
+</div>

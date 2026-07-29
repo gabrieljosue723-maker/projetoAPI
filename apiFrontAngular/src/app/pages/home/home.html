@@ -5,6 +5,40 @@
         <div class="hero-inner">
             <h1>Todos os produtos</h1>
             <p class="hero-subtitulo">Encontra as melhores ofertas de produtos usados em Angola.</p>
+
+            <div class="barra-pesquisa">
+                <div class="campo-pesquisa campo-pesquisa-nome">
+                    <input
+                        type="text"
+                        placeholder="Pesquisar por nome do produto..."
+                        [(ngModel)]="nomePesquisa"
+                        (ngModelChange)="onPesquisaAlterada()"
+                    />
+                </div>
+                <div class="campo-pesquisa">
+                    <input
+                        type="number"
+                        placeholder="Preço mín."
+                        [(ngModel)]="precoMin"
+                        (ngModelChange)="onPesquisaAlterada()"
+                        min="0"
+                    />
+                </div>
+                <div class="campo-pesquisa">
+                    <input
+                        type="number"
+                        placeholder="Preço máx."
+                        [(ngModel)]="precoMax"
+                        (ngModelChange)="onPesquisaAlterada()"
+                        min="0"
+                    />
+                </div>
+                @if (nomePesquisa || precoMin !== null || precoMax !== null) {
+                <button type="button" class="botao-limpar-pesquisa" (click)="limparFiltros()">
+                    Limpar
+                </button>
+                }
+            </div>
         </div>
     </div>
 
@@ -48,12 +82,24 @@
                                 <span>{{ produto.user.name }}</span>
                             </div>
                         </div>
+                        <button
+                            type="button"
+                            class="botao-carrinho"
+                            [class.botao-carrinho-ok]="idsRecemAdicionados().has(produto.id)"
+                            (click)="adicionarAoCarrinho(produto)"
+                        >
+                            @if (idsRecemAdicionados().has(produto.id)) {
+                            Adicionado ✓
+                            } @else {
+                            Adicionar ao carrinho
+                            }
+                        </button>
                     </div>
             </div>
             } @empty {
             <div class="estado-vazio">
-                <p class="vazio-titulo">Ainda não há produtos.</p>
-                <p class="vazio-desc">Sê o primeiro a publicar um produto no marketplace.</p>
+                <p class="vazio-titulo">Nenhum produto encontrado.</p>
+                <p class="vazio-desc">Tenta ajustar a pesquisa ou os filtros de preço.</p>
             </div>
             }
         </div>

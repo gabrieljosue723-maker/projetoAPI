@@ -38,6 +38,60 @@
     font-size: 17px;
     color: rgba(255, 255, 255, 0.75);
     line-height: 1.6;
+    margin-bottom: 28px;
+}
+
+.barra-pesquisa {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 12px;
+    border-radius: var(--radius);
+    backdrop-filter: blur(8px);
+}
+
+.campo-pesquisa {
+    flex: 1;
+    min-width: 140px;
+}
+
+.campo-pesquisa-nome {
+    flex: 2;
+    min-width: 220px;
+}
+
+.campo-pesquisa input {
+    width: 100%;
+    padding: 12px 14px;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--cor-texto);
+}
+
+.campo-pesquisa input::placeholder {
+    color: var(--cor-texto-menor);
+}
+
+.campo-pesquisa input:focus {
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.botao-limpar-pesquisa {
+    padding: 12px 18px;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.botao-limpar-pesquisa:hover {
+    background: rgba(255, 255, 255, 0.25);
 }
 
 .conteudo {
@@ -223,4 +277,27 @@
     border-radius: var(--radius-sm);
     margin-bottom: 24px;
     font-size: 14px;
+}
+
+.botao-carrinho {
+    margin-top: 14px;
+    width: 100%;
+    padding: 10px;
+    background: var(--gradiente-primario);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 700;
+    box-shadow: var(--sombra-cor);
+    transition: var(--transicao);
+}
+
+.botao-carrinho:hover {
+    box-shadow: 0 12px 28px rgba(79, 70, 229, 0.35);
+}
+
+.botao-carrinho-ok {
+    background: var(--cor-sucesso);
+    box-shadow: none;
 }

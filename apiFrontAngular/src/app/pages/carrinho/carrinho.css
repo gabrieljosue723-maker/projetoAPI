@@ -1,0 +1,314 @@
+.hero-carrinho {
+    background: var(--gradiente-hero);
+    padding: 48px 24px;
+}
+
+.hero-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+}
+
+.hero-inner h1 {
+    font-size: 34px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -1px;
+    margin-bottom: 8px;
+}
+
+.hero-subtitulo {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.conteudo {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 40px 24px;
+}
+
+.layout-carrinho {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 24px;
+    align-items: start;
+}
+
+.lista-itens {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.item-carrinho {
+    background: var(--cor-superficie);
+    border-radius: var(--radius);
+    box-shadow: var(--sombra);
+    padding: 16px;
+    display: grid;
+    grid-template-columns: 80px 1fr auto auto auto;
+    align-items: center;
+    gap: 18px;
+    transition: var(--transicao);
+}
+
+.item-a-atualizar {
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+.item-imagem {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.item-imagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.item-info h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--cor-texto);
+    margin-bottom: 4px;
+}
+
+.item-vendedor {
+    font-size: 12px;
+    color: var(--cor-texto-suave);
+    margin-bottom: 4px;
+}
+
+.item-preco-unit {
+    font-size: 12px;
+    color: var(--cor-texto-menor);
+}
+
+.item-quantidade {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--cor-fundo);
+    border-radius: var(--radius-full);
+    padding: 4px;
+}
+
+.botao-qtd {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--cor-superficie);
+    color: var(--cor-primaria);
+    font-size: 16px;
+    font-weight: 700;
+    box-shadow: var(--sombra-xs);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.botao-qtd:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.qtd-valor {
+    min-width: 20px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--cor-texto);
+}
+
+.item-subtotal {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--cor-primaria);
+    white-space: nowrap;
+}
+
+.botao-remover {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--cor-erro-fundo);
+    color: var(--cor-erro);
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.botao-remover:hover {
+    background: var(--cor-erro);
+    color: white;
+}
+
+.botao-remover:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.resumo-carrinho {
+    background: var(--cor-superficie);
+    border-radius: var(--radius);
+    box-shadow: var(--sombra);
+    padding: 24px;
+    position: sticky;
+    top: calc(var(--navbar-height) + 20px);
+}
+
+.resumo-carrinho h2 {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--cor-texto);
+    margin-bottom: 18px;
+}
+
+.linha-resumo {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: var(--cor-texto-suave);
+    margin-bottom: 12px;
+}
+
+.linha-total {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--cor-texto);
+    padding-top: 12px;
+    border-top: 1px solid var(--cor-borda);
+    margin-bottom: 20px;
+}
+
+.botao-finalizar {
+    width: 100%;
+    padding: 14px;
+    background: var(--gradiente-primario);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 15px;
+    font-weight: 700;
+    box-shadow: var(--sombra-cor);
+    margin-bottom: 10px;
+}
+
+.botao-finalizar:hover {
+    box-shadow: 0 12px 32px rgba(79, 70, 229, 0.4);
+}
+
+.botao-limpar {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    color: var(--cor-texto-suave);
+    border: 1.5px solid var(--cor-borda);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.botao-limpar:hover {
+    border-color: var(--cor-erro);
+    color: var(--cor-erro);
+    background: var(--cor-erro-fundo);
+}
+
+.estado-vazio {
+    text-align: center;
+    padding: 100px 24px;
+}
+
+.vazio-titulo {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--cor-texto);
+    margin-bottom: 8px;
+}
+
+.vazio-desc {
+    font-size: 15px;
+    color: var(--cor-texto-suave);
+    margin-bottom: 24px;
+}
+
+.botao-ir-home {
+    display: inline-block;
+    padding: 12px 28px;
+    background: var(--gradiente-primario);
+    color: white;
+    border-radius: var(--radius-full);
+    font-size: 14px;
+    font-weight: 700;
+    box-shadow: var(--sombra-cor);
+}
+
+.erro-geral {
+    background: var(--cor-erro-fundo);
+    color: var(--cor-erro);
+    border: 1px solid rgba(220, 38, 38, 0.2);
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 24px;
+    font-size: 14px;
+}
+
+.skeleton-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.skeleton-linha {
+    height: 96px;
+    border-radius: var(--radius);
+    background: linear-gradient(90deg, var(--cor-fundo) 25%, var(--cor-fundo-2) 50%, var(--cor-fundo) 75%);
+    background-size: 800px 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+@media (max-width: 900px) {
+    .layout-carrinho {
+        grid-template-columns: 1fr;
+    }
+
+    .item-carrinho {
+        grid-template-columns: 60px 1fr;
+        grid-template-areas:
+            "imagem info"
+            "qtd qtd"
+            "subtotal remover";
+        row-gap: 12px;
+    }
+
+    .item-imagem {
+        grid-area: imagem;
+        width: 60px;
+        height: 60px;
+    }
+
+    .item-info {
+        grid-area: info;
+    }
+
+    .item-quantidade {
+        grid-area: qtd;
+        justify-self: start;
+    }
+
+    .item-subtotal {
+        grid-area: subtotal;
+    }
+
+    .botao-remover {
+        grid-area: remover;
+        justify-self: end;
+    }
+}
