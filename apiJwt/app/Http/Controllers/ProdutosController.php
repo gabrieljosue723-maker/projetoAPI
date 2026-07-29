@@ -10,10 +10,29 @@ class ProdutosController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
+     * Suporta pesquisa opcional via query string:
+     *   ?nome=cadeira            -> filtra pelo nome (parcial, case-insensitive)
+     *   ?preco_min=1000          -> produtos com preço >= 1000
+     *   ?preco_max=5000          -> produtos com preço <= 5000
      */
-    public function index()
+    public function index(Request $request)
     {
-        return ProdutoResource::collection(Produto::all());
+        $query = Produto::query();
+
+        if ($request->filled('nome')) {
+            $query->where('nome', 'like', '%' . $request->input('nome') . '%');
+        }
+
+        if ($request->filled('preco_min')) {
+            $query->where('preco', '>=', $request->input('preco_min'));
+        }
+
+        if ($request->filled('preco_max')) {
+            $query->where('preco', '<=', $request->input('preco_max'));
+        }
+
+        return ProdutoResource::collection($query->latest()->get());
     }
 
     /**

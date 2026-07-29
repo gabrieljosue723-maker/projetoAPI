@@ -4,11 +4,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProdutosController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CarrinhoController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:api')->group(function () {
@@ -23,6 +25,14 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/produtosDeletados', [ProdutosController::class, 'produtosDeletados']);
         Route::patch('/restore/{id}', [ProdutosController::class, 'restaurar']);
         Route::delete('/deletarPermanente/{id}', [ProdutosController::class, 'deletarPermanente']);
+    });
+
+    Route::prefix('carrinho')->group(function () {
+        Route::get('/', [CarrinhoController::class, 'index']);
+        Route::post('/adicionar', [CarrinhoController::class, 'store']);
+        Route::put('/atualizar/{id}', [CarrinhoController::class, 'update']);
+        Route::delete('/remover/{id}', [CarrinhoController::class, 'destroy']);
+        Route::delete('/limpar', [CarrinhoController::class, 'limpar']);
     });
 });
 
