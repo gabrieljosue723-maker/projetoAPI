@@ -37,4 +37,6 @@ RUN a2enmod rewrite
 
 EXPOSE 80
 
-CMD ["apache2-foreground"]
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+CMD ["/start.sh"]
