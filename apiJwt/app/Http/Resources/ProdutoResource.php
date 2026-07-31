@@ -13,19 +13,22 @@ class ProdutoResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
-    {
-        return [
-            'id' => $this->id,
-            'user' => [
-                'foto' => $this->user->foto ? Storage::disk('public')->url($this->user->foto) : null,
-                'name' => $this->user->name,
-                'email' => $this->user->email,
-            ],
-            'nome' => $this->nome,
-            'descricao' => $this->descricao,
-            'preco' => $this->preco,
-            'imagem' => $this->imagem ? Storage::disk('public')->url($this->imagem) : null,
-        ];
-    }
+   public function toArray($request)
+{
+    return [
+        'id' => $this->id,
+        'nome' => $this->nome,
+        'descricao' => $this->descricao,
+        'preco' => $this->preco,
+        'imagem' => $this->imagem ? asset('storage/' . $this->imagem) : null,
+        'telefone' => $this->telefone,
+        'whatsapp' => $this->whatsapp,
+        'facebook' => $this->facebook,
+        'user' => [
+            'id' => $this->user->id,
+            'name' => $this->user->name,
+        ],
+        'created_at' => $this->created_at,
+    ];
+}
 }

@@ -13,22 +13,22 @@ export class ProdutoService {
         if (filtros?.nome) params.append('nome', filtros.nome);
         if (filtros?.preco_min !== null && filtros?.preco_min !== undefined) params.append('preco_min', filtros.preco_min.toString());
         if (filtros?.preco_max !== null && filtros?.preco_max !== undefined) params.append('preco_max', filtros.preco_max.toString());
-        
+
         const query = params.toString();
         if (query) url += '?' + query;
-        
+
         return this.http.get(url);
     }
 
-    criar(dados: { 
-        user_id: number; 
-        nome: string; 
-        descricao: string; 
-        preco: number; 
+    criar(dados: {
+        user_id: number;
+        nome: string;
+        descricao: string;
+        preco: number;
         telefone?: string;
         whatsapp?: string;
         facebook?: string;
-        imagem: File 
+        imagem: File
     }): Observable<any> {
         const formData = new FormData();
         formData.append('user_id', dados.user_id.toString());
@@ -40,7 +40,7 @@ export class ProdutoService {
         if (dados.facebook) formData.append('facebook', dados.facebook);
         formData.append('imagem', dados.imagem);
 
-        return this.http.post(`${environment.apiUrl}/produtos`, formData);
+        return this.http.post(`${environment.apiUrl}/produtos/store`, formData);  // <-- MUDOU AQUI
     }
 
     meusProdutos(): Observable<any> {

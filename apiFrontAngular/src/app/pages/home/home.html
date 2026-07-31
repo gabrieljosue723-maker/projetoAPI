@@ -75,6 +75,22 @@
                     <div class="corpo">
                         <h3>{{ produto.nome }}</h3>
                         <p class="descricao">{{ produto.descricao }}</p>
+                        
+                        <!-- Contacto do vendedor -->
+                        @if (produto.telefone || produto.whatsapp || produto.facebook) {
+                        <div class="contacto-vendedor">
+                            @if (produto.telefone) {
+                            <span class="tag-contacto tag-telefone">📞 {{ produto.telefone }}</span>
+                            }
+                            @if (produto.whatsapp) {
+                            <span class="tag-contacto tag-whatsapp">💬 {{ produto.whatsapp }}</span>
+                            }
+                            @if (produto.facebook) {
+                            <span class="tag-contacto tag-facebook">📘 {{ produto.facebook }}</span>
+                            }
+                        </div>
+                        }
+                        
                         <div class="cartao-rodape">
                             <span class="preco">{{ produto.preco | number: '1.2-2' }} Kz</span>
                             <div class="vendedor">

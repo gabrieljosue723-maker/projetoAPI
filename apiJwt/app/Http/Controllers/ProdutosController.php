@@ -47,25 +47,26 @@ class ProdutosController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+{
+    $dados = $request->validate([
+        'user_id' => 'required|exists:users,id',
+        'nome' => 'required|string|max:255',
+        'descricao' => 'nullable|string',
+        'preco' => 'required|numeric|min:0',
+        'telefone' => 'nullable|string|max:20',
+        'whatsapp' => 'nullable|string|max:20',
+        'facebook' => 'nullable|string|max:255',
+        'imagem' => 'required|file|mimes:jpeg,png,jpg,webp|max:2048',
+    ]);
 
-
-        $dados = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'nome' => 'required|string',
-            'descricao' => 'sometimes|string',
-            'preco' => 'required|numeric',
-            'imagem' => 'required|file',
-        ]);
-        if ($request->hasFile('imagem')) {
-            $dados['imagem'] = $request->file('imagem')->store('produtos', 'public');
-        }
-
-        $produto = Produto::create($dados);
-
-        return new ProdutoResource($produto);
+    if ($request->hasFile('imagem')) {
+        $dados['imagem'] = $request->file('imagem')->store('produtos', 'public');
     }
 
+    $produto = Produto::create($dados);
+
+    return new ProdutoResource($produto);
+}
     /**
      * Display the specified resource.
      */
