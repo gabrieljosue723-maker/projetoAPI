@@ -13,7 +13,7 @@
                     id="email"
                     type="email"
                     formControlName="email"
-                    placeholder="exemplo@email.com"
+                    placeholder="Insira seu email"
                     [class.campo-erro]="formulario.get('email')?.invalid && formulario.get('email')?.touched"
                 />
                 @if (formulario.get('email')?.invalid && formulario.get('email')?.touched) {
@@ -27,7 +27,7 @@
                     id="password"
                     type="password"
                     formControlName="password"
-                    placeholder="A tua password"
+                    placeholder="Insira a sua password"
                     [class.campo-erro]="formulario.get('password')?.invalid && formulario.get('password')?.touched"
                 />
                 @if (formulario.get('password')?.invalid && formulario.get('password')?.touched) {

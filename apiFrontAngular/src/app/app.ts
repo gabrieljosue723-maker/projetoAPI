@@ -21,7 +21,10 @@ export class App {
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         const url = event.urlAfterRedirects || event.url;
-        this.esconderLayout.set(url === '/login' || url.startsWith('/login/'));
+        const rotasSemLayout = ['/login', '/registar'];
+        this.esconderLayout.set(
+          rotasSemLayout.some(rota => url === rota || url.startsWith(rota + '/'))
+        );
       });
   }
 }

@@ -13,7 +13,7 @@
                     id="name"
                     type="text"
                     formControlName="name"
-                    placeholder="O teu nome"
+                    placeholder="Insira o teu nome"
                     [class.campo-erro]="formulario.get('name')?.invalid && formulario.get('name')?.touched"
                 />
                 @if (formulario.get('name')?.invalid && formulario.get('name')?.touched) {
@@ -27,7 +27,7 @@
                     id="email"
                     type="email"
                     formControlName="email"
-                    placeholder="exemplo@email.com"
+                    placeholder="Insira o seu email"
                     [class.campo-erro]="formulario.get('email')?.invalid && formulario.get('email')?.touched"
                 />
                 @if (formulario.get('email')?.invalid && formulario.get('email')?.touched) {
@@ -41,7 +41,7 @@
                     id="password"
                     type="password"
                     formControlName="password"
-                    placeholder="Mínimo 8 caracteres"
+                    placeholder="Insira a sua password-min(8)"
                     [class.campo-erro]="formulario.get('password')?.invalid && formulario.get('password')?.touched"
                 />
                 @if (formulario.get('password')?.invalid && formulario.get('password')?.touched) {
@@ -55,7 +55,7 @@
                     id="password_confirmation"
                     type="password"
                     formControlName="password_confirmation"
-                    placeholder="Repete a password"
+                    placeholder="Confirme a password"
                     [class.campo-erro]="formulario.errors?.['passwordsDiferentes'] && formulario.get('password_confirmation')?.touched"
                 />
                 @if (formulario.errors?.['passwordsDiferentes'] && formulario.get('password_confirmation')?.touched) {

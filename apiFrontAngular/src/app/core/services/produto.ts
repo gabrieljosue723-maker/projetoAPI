@@ -39,21 +39,15 @@ export class ProdutoService {
         return this.http.get<{ data: Produto }>(`${this.baseUrl}/show/${id}`);
     }
 
-    criar(dados: {
-        user_id: number;
-        nome: string;
-        descricao: string;
-        preco: string;
-        imagem: File;
-    }): Observable<{ data: Produto }> {
+    criar(dados: { user_id: number, nome: string, descricao: string, preco: number, imagem: File }) {
         const formData = new FormData();
-        formData.append('user_id', String(dados.user_id));
+        formData.append('user_id', dados.user_id.toString());
         formData.append('nome', dados.nome);
         formData.append('descricao', dados.descricao);
-        formData.append('preco', String(dados.preco));
+        formData.append('preco', dados.preco.toString());
         formData.append('imagem', dados.imagem);
 
-        return this.http.post<{ data: Produto }>(`${this.baseUrl}/store`, formData)
+        return this.http.post(`${environment.apiUrl}/produtos`, formData);
     }
 
     atualizar(
