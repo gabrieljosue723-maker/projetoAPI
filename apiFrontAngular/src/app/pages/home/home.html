@@ -78,7 +78,7 @@
                         <div class="cartao-rodape">
                             <span class="preco">{{ produto.preco | number: '1.2-2' }} Kz</span>
                             <div class="vendedor">
-                                <div class="avatar-mini">{{ (produto.user.name ?? 'U').charAt(0).toUpperCase() }}</div>
+                                <div class="avatar-mini">{{ (produto.user.name ? produto.user.name : 'U').charAt(0).toUpperCase() }}</div>
                                 <span>{{ produto.user.name }}</span>
                             </div>
                         </div>
