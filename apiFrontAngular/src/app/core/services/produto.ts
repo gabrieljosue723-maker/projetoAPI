@@ -1,70 +1,61 @@
-import { Injectable, inject } from "@angular/core";
-import { HttpClient, HttpParams } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { environment } from "../../../environment/environmente";
-import { Produto } from "../models/produto";
-
-export interface FiltrosProduto {
-    nome?: string;
-    preco_min?: number | null;
-    preco_max?: number | null;
-}
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../../environment/environmente';
 
 @Injectable({ providedIn: 'root' })
 export class ProdutoService {
     private http = inject(HttpClient);
-    private baseUrl = `${environment.apiUrl}/produtos`;
 
-    listar(filtros?: FiltrosProduto): Observable<{ data: Produto[] }> {
-        let params = new HttpParams();
-
-        if (filtros?.nome) {
-            params = params.set('nome', filtros.nome);
-        }
-        if (filtros?.preco_min !== null && filtros?.preco_min !== undefined) {
-            params = params.set('preco_min', filtros.preco_min);
-        }
-        if (filtros?.preco_max !== null && filtros?.preco_max !== undefined) {
-            params = params.set('preco_max', filtros.preco_max);
-        }
-
-        return this.http.get<{ data: Produto[] }>(this.baseUrl, { params });
+    listar(filtros?: { nome?: string; preco_min?: number | null; preco_max?: number | null }): Observable<any> {
+        let url = `${environment.apiUrl}/produtos`;
+        const params = new URLSearchParams();
+        if (filtros?.nome) params.append('nome', filtros.nome);
+        if (filtros?.preco_min !== null && filtros?.preco_min !== undefined) params.append('preco_min', filtros.preco_min.toString());
+        if (filtros?.preco_max !== null && filtros?.preco_max !== undefined) params.append('preco_max', filtros.preco_max.toString());
+        
+        const query = params.toString();
+        if (query) url += '?' + query;
+        
+        return this.http.get(url);
     }
 
-    listarLixeira(): Observable<{ data: Produto[] }> {
-        return this.http.get<{ data: Produto[] }>(`${this.baseUrl}/produtosDeletados`);
-    }
-
-    obter(id: number): Observable<{ data: Produto }> {
-        return this.http.get<{ data: Produto }>(`${this.baseUrl}/show/${id}`);
-    }
-
-    criar(dados: { user_id: number; nome: string; descricao: string; preco: number; imagem: File }): Observable<any> {
+    criar(dados: { 
+        user_id: number; 
+        nome: string; 
+        descricao: string; 
+        preco: number; 
+        telefone?: string;
+        whatsapp?: string;
+        facebook?: string;
+        imagem: File 
+    }): Observable<any> {
         const formData = new FormData();
         formData.append('user_id', dados.user_id.toString());
         formData.append('nome', dados.nome);
         formData.append('descricao', dados.descricao);
         formData.append('preco', dados.preco.toString());
+        if (dados.telefone) formData.append('telefone', dados.telefone);
+        if (dados.whatsapp) formData.append('whatsapp', dados.whatsapp);
+        if (dados.facebook) formData.append('facebook', dados.facebook);
         formData.append('imagem', dados.imagem);
 
         return this.http.post(`${environment.apiUrl}/produtos`, formData);
     }
-    atualizar(
-        id: number,
-        dados: { nome: string; descricao: string; preco: number; imagem: string }
-    ): Observable<{ data: Produto }> {
-        return this.http.put<{ data: Produto }>(`${this.baseUrl}/update/${id}`, dados)
+
+    meusProdutos(): Observable<any> {
+        return this.http.get(`${environment.apiUrl}/meus-produtos`);
     }
 
-    apagar(id: number): Observable<{ message: string }> {
-        return this.http.delete<{ message: string }>(`${this.baseUrl}/delete/${id}`);
+    obter(id: number): Observable<any> {
+        return this.http.get(`${environment.apiUrl}/produtos/${id}`);
     }
 
-    restaurar(id: number): Observable<{ data: Produto }> {
-        return this.http.patch<{ data: Produto }>(`${this.baseUrl}/restore/${id}`, {})
+    atualizar(id: number, dados: any): Observable<any> {
+        return this.http.put(`${environment.apiUrl}/produtos/${id}`, dados);
     }
 
-    apagarPermanente(id: number): Observable<{ message: string }> {
-        return this.http.delete<{ message: string }>(`${this.baseUrl}/deletarPermanente/${id}`);
+    eliminar(id: number): Observable<any> {
+        return this.http.delete(`${environment.apiUrl}/produtos/${id}`);
     }
 }

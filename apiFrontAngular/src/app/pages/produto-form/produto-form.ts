@@ -20,16 +20,22 @@ export class ProdutoForm {
     aEnviar = signal(false);
     mensagemErro = signal<string | null>(null);
     ficheiroImagem = signal<File | null>(null);
+    nomeFicheiro = signal<string>('');
 
     formulario = this.fb.group({
         nome: ['', [Validators.required]],
         descricao: ['', [Validators.required]],
         preco: [null as number | null, [Validators.required, Validators.min(0)]],
+        telefone: ['', [Validators.pattern(/^[0-9\s\-\+\(\)]{9,20}$/)]],
+        whatsapp: ['', [Validators.pattern(/^[0-9\s\-\+\(\)]{9,20}$/)]],
+        facebook: [''],
     });
 
     aoEscolherFicheiro(evento: Event): void {
         const input = evento.target as HTMLInputElement;
-        this.ficheiroImagem.set(input.files?.[0] ?? null);
+        const ficheiro = input.files?.[0] ?? null;
+        this.ficheiroImagem.set(ficheiro);
+        this.nomeFicheiro.set(ficheiro ? ficheiro.name : '');
     }
 
     guardar(): void {
@@ -47,24 +53,27 @@ export class ProdutoForm {
             return;
         }
 
-        const { nome, descricao, preco } = this.formulario.getRawValue();
+        const valores = this.formulario.getRawValue();
 
         this.aEnviar.set(true);
         this.mensagemErro.set(null);
 
         this.produtoService
-            .criar({ 
-                user_id: userId, 
-                nome: nome!, 
-                descricao: descricao!, 
-                preco: Number(preco), 
-                imagem: this.ficheiroImagem()! 
+            .criar({
+                user_id: userId,
+                nome: valores.nome!,
+                descricao: valores.descricao!,
+                preco: Number(valores.preco),
+                telefone: valores.telefone,
+                whatsapp: valores.whatsapp || undefined,
+                facebook: valores.facebook || undefined,
+                imagem: this.ficheiroImagem()!
             })
             .subscribe({
                 next: () => this.router.navigate(['/dashboard']),
-                error: () => {
+                error: (err) => {
                     this.aEnviar.set(false);
-                    this.mensagemErro.set('Não foi possível criar o produto. Confere os dados.');
+                    this.mensagemErro.set(err.error?.message || 'Não foi possível criar o produto. Confere os dados.');
                 },
             });
     }
