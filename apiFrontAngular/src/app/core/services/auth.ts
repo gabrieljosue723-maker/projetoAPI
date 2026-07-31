@@ -17,7 +17,6 @@ export class authService {
     estaAutenticado = computed(() => this.usuarioAtual() !== null);
 
     constructor() {
-        // Recupera sessão ao iniciar a app (F5 / atualizar página)
         const tokenSalvo = localStorage.getItem(CHAVE_TOKEN);
         const usuarioSalvo = localStorage.getItem(CHAVE_USUARIO);
         
@@ -34,14 +33,7 @@ export class authService {
         return this.http.post<LoginResponse>(`${environment.apiUrl}/login`, { email, password }).pipe(
             tap((resposta) => {
                 localStorage.setItem(CHAVE_TOKEN, resposta.access_token);
-                // Se o backend retornar o usuário no login, guarda direto:
-                if (resposta.user) {
-                    localStorage.setItem(CHAVE_USUARIO, JSON.stringify(resposta.user));
-                    this.usuarioAtual.set(resposta.user);
-                } else {
-                    // Senão, carrega do perfil
-                    this.carregarPerfil().subscribe();
-                }
+                this.carregarPerfil().subscribe();
             })
         );
     }
@@ -52,12 +44,7 @@ export class authService {
             .pipe(
                 tap((resposta) => {
                     localStorage.setItem(CHAVE_TOKEN, resposta.access_token);
-                    if (resposta.user) {
-                        localStorage.setItem(CHAVE_USUARIO, JSON.stringify(resposta.user));
-                        this.usuarioAtual.set(resposta.user);
-                    } else {
-                        this.carregarPerfil().subscribe();
-                    }
+                    this.carregarPerfil().subscribe();
                 })
             );
     }
