@@ -3,7 +3,6 @@ import { DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Subject, debounceTime } from 'rxjs';
 import { ProdutoService } from '../../core/services/produto';
-import { CarrinhoService } from '../../core/services/carrinho';
 import { Produto } from '../../core/models/produto';
 
 @Component({
@@ -15,15 +14,10 @@ import { Produto } from '../../core/models/produto';
 })
 export class Home implements OnInit {
     private produtoService = inject(ProdutoService);
-    private carrinhoService = inject(CarrinhoService);
 
     produtos = signal<Produto[]>([]);
     aCarregar = signal(true);
     mensagemErro = signal<string | null>(null);
-
-    // IDs dos produtos que acabaram de ser adicionados ao carrinho,
-    // usado só para mostrar um feedback rápido no botão ("Adicionado!").
-    idsRecemAdicionados = signal<Set<number>>(new Set());
 
     nomePesquisa = '';
     precoMin: number | null = null;
@@ -70,24 +64,5 @@ export class Home implements OnInit {
                     this.aCarregar.set(false);
                 },
             });
-    }
-
-    adicionarAoCarrinho(produto: Produto): void {
-        this.carrinhoService.adicionar(produto.id, 1).subscribe({
-            next: () => {
-                const atual = new Set(this.idsRecemAdicionados());
-                atual.add(produto.id);
-                this.idsRecemAdicionados.set(atual);
-
-                setTimeout(() => {
-                    const depois = new Set(this.idsRecemAdicionados());
-                    depois.delete(produto.id);
-                    this.idsRecemAdicionados.set(depois);
-                }, 1500);
-            },
-            error: () => {
-                this.mensagemErro.set('Não foi possível adicionar o produto ao carrinho.');
-            },
-        });
     }
 }

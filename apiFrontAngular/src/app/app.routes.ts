@@ -3,7 +3,6 @@ import { authGuard } from './core/guards/auth';
 
 export const routes: Routes = [
 
-
     { path: '', redirectTo: 'home', pathMatch: 'full' },
 
     {
@@ -31,7 +30,6 @@ export const routes: Routes = [
             import('./pages/produto-form/produto-form').then((m) => m.ProdutoForm),
     },
     {
-
         path: 'produtos/:id/editar',
         canActivate: [authGuard],
         loadComponent: () =>
@@ -42,12 +40,6 @@ export const routes: Routes = [
         canActivate: [authGuard],
         loadComponent: () => import('./pages/lixeira/lixeira').then((m) => m.Lixeira),
     },
-    {
-        path: 'carrinho',
-        canActivate: [authGuard],
-        loadComponent: () => import('./pages/carrinho/carrinho').then((m) => m.Carrinho),
-    },
 
     { path: '**', redirectTo: 'home' },
 ];
-

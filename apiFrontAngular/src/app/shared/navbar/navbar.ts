@@ -1,25 +1,18 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { authService } from '../../core/services/auth';
-import { CarrinhoService } from '../../core/services/carrinho';
 
 @Component({
-  selector: 'app-navbar',
-  imports: [RouterLink, RouterLinkActive],
-  templateUrl: './navbar.html',
-  styleUrl: './navbar.css',
+    selector: 'app-navbar',
+    standalone: true,
+    imports: [RouterLink, RouterLinkActive],
+    templateUrl: './navbar.html',
+    styleUrl: './navbar.css',
 })
-export class Navbar implements OnInit {
-  authService = inject(authService);
-  carrinhoService = inject(CarrinhoService);
+export class Navbar {
+    authService = inject(authService);
 
-  ngOnInit(): void {
-    if (this.authService.estaAutenticado()) {
-      this.carrinhoService.carregar().subscribe();
+    sair(): void {
+        this.authService.logout();
     }
-  }
-
-  sair(): void {
-    this.authService.logout();
-  }
 }

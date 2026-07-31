@@ -39,7 +39,7 @@ export class ProdutoService {
         return this.http.get<{ data: Produto }>(`${this.baseUrl}/show/${id}`);
     }
 
-    criar(dados: { user_id: number, nome: string, descricao: string, preco: number, imagem: File }) {
+    criar(dados: { user_id: number; nome: string; descricao: string; preco: number; imagem: File }): Observable<any> {
         const formData = new FormData();
         formData.append('user_id', dados.user_id.toString());
         formData.append('nome', dados.nome);
@@ -49,7 +49,6 @@ export class ProdutoService {
 
         return this.http.post(`${environment.apiUrl}/produtos`, formData);
     }
-
     atualizar(
         id: number,
         dados: { nome: string; descricao: string; preco: number; imagem: string }
