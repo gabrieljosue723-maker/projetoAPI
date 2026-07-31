@@ -19,14 +19,12 @@ export class ProdutoForm {
 
     aEnviar = signal(false);
     mensagemErro = signal<string | null>(null);
-
-
     ficheiroImagem = signal<File | null>(null);
 
     formulario = this.fb.group({
         nome: ['', [Validators.required]],
         descricao: ['', [Validators.required]],
-        preco: [null as string | null, [Validators.required, Validators.min(0)]],
+        preco: [null as number | null, [Validators.required, Validators.min(0)]],
     });
 
     aoEscolherFicheiro(evento: Event): void {
@@ -55,7 +53,13 @@ export class ProdutoForm {
         this.mensagemErro.set(null);
 
         this.produtoService
-            .criar({ user_id: userId, nome: nome!, descricao: descricao!, preco: preco!, imagem: this.ficheiroImagem()! })
+            .criar({ 
+                user_id: userId, 
+                nome: nome!, 
+                descricao: descricao!, 
+                preco: Number(preco), 
+                imagem: this.ficheiroImagem()! 
+            })
             .subscribe({
                 next: () => this.router.navigate(['/dashboard']),
                 error: () => {
