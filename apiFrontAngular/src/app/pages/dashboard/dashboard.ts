@@ -27,7 +27,9 @@ export class Dashboard implements OnInit {
     meusProdutos = computed(() => {
         const meuId = this.authService.usuarioAtual()?.id;
         if (!meuId) return [];
-        return this.todosOsProdutos().filter((produto) => produto.user.id === meuId);
+        // Converte ambos para número para comparar corretamente
+        const meuIdNum = Number(meuId);
+        return this.todosOsProdutos().filter((produto) => Number(produto.user.id) === meuIdNum);
     });
 
     ngOnInit(): void {

@@ -27,6 +27,11 @@ export class authService {
             } catch {
                 this.limparSessaoESair();
             }
+        } else if (tokenSalvo) {
+            // Tem token mas não tem usuário - carrega do servidor
+            this.carregarPerfil().subscribe({
+                error: () => this.limparSessaoESair()
+            });
         }
     }
 

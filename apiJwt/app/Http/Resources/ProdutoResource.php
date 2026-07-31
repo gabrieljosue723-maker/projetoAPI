@@ -20,7 +20,7 @@ class ProdutoResource extends JsonResource
         'nome' => $this->nome,
         'descricao' => $this->descricao,
         'preco' => $this->preco,
-        'imagem' => $this->imagem ? asset('storage/' . $this->imagem) : null,
+        'imagem' => $this->imagem ? url('storage/' . $this->imagem) : null,
         'telefone' => $this->telefone,
         'whatsapp' => $this->whatsapp,
         'facebook' => $this->facebook,

@@ -60,6 +60,22 @@
                 <div class="corpo">
                     <h3>{{ produto.nome }}</h3>
                     <p class="descricao">{{ produto.descricao }}</p>
+                    
+                    <!-- Contactos -->
+                    @if (produto.telefone || produto.whatsapp || produto.facebook) {
+                    <div class="contacto-produto">
+                        @if (produto.telefone) {
+                        <span class="tag-contacto">📞 {{ produto.telefone }}</span>
+                        }
+                        @if (produto.whatsapp) {
+                        <span class="tag-contacto">💬 {{ produto.whatsapp }}</span>
+                        }
+                        @if (produto.facebook) {
+                        <span class="tag-contacto">📘 {{ produto.facebook }}</span>
+                        }
+                    </div>
+                    }
+                    
                     <p class="preco">{{ produto.preco | number: '1.2-2' }} Kz</p>
                     <div class="acoes">
                         <a [routerLink]="['/produtos', produto.id, 'editar']" class="botao-editar">Editar</a>
