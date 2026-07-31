@@ -1,7 +1,8 @@
-import { Component, computed, inject } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Component, signal, inject } from '@angular/core';
+import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
 import { Navbar } from './shared/navbar/navbar';
 import { Footer } from './shared/footer/footer';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -13,8 +14,14 @@ import { Footer } from './shared/footer/footer';
 export class App {
   protected readonly title = 'Usados Úteis';
   private readonly router = inject(Router);
-  readonly esconderLayout = computed(() => {
-    const url = this.router.url;
-    return url === '/login' || url.startsWith('/login/');
-  });
+  readonly esconderLayout = signal(false);
+
+  constructor() {
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        const url = event.urlAfterRedirects || event.url;
+        this.esconderLayout.set(url === '/login' || url.startsWith('/login/'));
+      });
+  }
 }
