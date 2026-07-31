@@ -26,6 +26,7 @@ export class Dashboard implements OnInit {
 
     meusProdutos = computed(() => {
         const meuId = this.authService.usuarioAtual()?.id;
+        if (!meuId) return [];
         return this.todosOsProdutos().filter((produto) => produto.user.id === meuId);
     });
 
@@ -37,7 +38,7 @@ export class Dashboard implements OnInit {
         this.aCarregar.set(true);
         this.produtoService.listar().subscribe({
             next: (resposta: any) => {
-                this.todosOsProdutos.set(resposta.data);
+                this.todosOsProdutos.set(resposta.data || []);
                 this.aCarregar.set(false);
             },
             error: () => {

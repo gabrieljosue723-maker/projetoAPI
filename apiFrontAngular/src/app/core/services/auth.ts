@@ -1,5 +1,5 @@
 import { Injectable, signal, computed, inject } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { Observable, tap } from "rxjs";
 import { environment } from "../../../environment/environmente";
@@ -19,10 +19,11 @@ export class authService {
     constructor() {
         const tokenSalvo = localStorage.getItem(CHAVE_TOKEN);
         const usuarioSalvo = localStorage.getItem(CHAVE_USUARIO);
-        
+
         if (tokenSalvo && usuarioSalvo) {
             try {
-                this.usuarioAtual.set(JSON.parse(usuarioSalvo));
+                const usuario = JSON.parse(usuarioSalvo);
+                this.usuarioAtual.set(usuario);
             } catch {
                 this.limparSessaoESair();
             }
@@ -50,7 +51,10 @@ export class authService {
     }
 
     carregarPerfil(): Observable<Usuario> {
-        return this.http.get<Usuario>(`${environment.apiUrl}/perfil`).pipe(
+        const token = this.obterToken();
+        const headers = token ? new HttpHeaders({ 'Authorization': `Bearer ${token}` }) : undefined;
+        
+        return this.http.get<Usuario>(`${environment.apiUrl}/perfil`, { headers }).pipe(
             tap((usuario) => {
                 this.usuarioAtual.set(usuario);
                 localStorage.setItem(CHAVE_USUARIO, JSON.stringify(usuario));
