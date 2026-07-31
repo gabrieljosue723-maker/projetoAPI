@@ -1,3 +1,4 @@
 {
-  "rootDirectory": "apiFrontAngular"
+  "rootDirectory": "apiFrontAngular",
+  "framework": "angular"
 }
