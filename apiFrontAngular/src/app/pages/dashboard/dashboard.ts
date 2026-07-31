@@ -27,7 +27,8 @@ export class Dashboard implements OnInit {
 
     meusProdutos = computed(() => {
         const meuEmail = this.authServiceInst.usuarioAtual()?.email;
-        return this.todosOsProdutos().filter((produto) => produto.user.email === meuEmail);
+       const meuId = this.authService.usuarioAtual()?.id;
+return this.todosOsProdutos().filter((produto) => produto.user.id === meuId);
     });
 
     ngOnInit(): void {
