@@ -14,21 +14,19 @@ import { Produto } from '../../core/models/produto';
 })
 export class Dashboard implements OnInit {
     private produtoService = inject(ProdutoService);
-    private authServiceInst = inject(authService);
+    private authService = inject(authService);
 
     get nomeUtilizador(): string {
-        return this.authServiceInst.usuarioAtual()?.name ?? 'Utilizador';
+        return this.authService.usuarioAtual()?.name ?? 'Utilizador';
     }
 
     todosOsProdutos = signal<Produto[]>([]);
     aCarregar = signal(true);
     mensagemErro = signal<string | null>(null);
 
-
     meusProdutos = computed(() => {
-        const meuEmail = this.authServiceInst.usuarioAtual()?.email;
-       const meuId = this.authService.usuarioAtual()?.id;
-return this.todosOsProdutos().filter((produto) => produto.user.id === meuId);
+        const meuId = this.authService.usuarioAtual()?.id;
+        return this.todosOsProdutos().filter((produto) => produto.user.id === meuId);
     });
 
     ngOnInit(): void {
@@ -38,7 +36,7 @@ return this.todosOsProdutos().filter((produto) => produto.user.id === meuId);
     carregar(): void {
         this.aCarregar.set(true);
         this.produtoService.listar().subscribe({
-            next: (resposta) => {
+            next: (resposta: any) => {
                 this.todosOsProdutos.set(resposta.data);
                 this.aCarregar.set(false);
             },
