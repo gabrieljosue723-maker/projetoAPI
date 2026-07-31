@@ -55,7 +55,19 @@ export class ProdutoService {
         return this.http.put(`${environment.apiUrl}/produtos/${id}`, dados);
     }
 
-    eliminar(id: number): Observable<any> {
+    apagar(id: number): Observable<any> {
         return this.http.delete(`${environment.apiUrl}/produtos/${id}`);
+    }
+
+    listarLixeira(): Observable<any> {
+        return this.http.get(`${environment.apiUrl}/produtos/lixeira`);
+    }
+
+    restaurar(id: number): Observable<any> {
+        return this.http.post(`${environment.apiUrl}/produtos/${id}/restaurar`, {});
+    }
+
+    apagarPermanente(id: number): Observable<any> {
+        return this.http.delete(`${environment.apiUrl}/produtos/${id}/permanente`);
     }
 }

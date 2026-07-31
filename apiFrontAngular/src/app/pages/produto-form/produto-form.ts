@@ -31,6 +31,11 @@ export class ProdutoForm {
         facebook: [''],
     });
 
+    abrirSeletorFicheiro(): void {
+        const input = document.getElementById('imagem') as HTMLInputElement;
+        if (input) input.click();
+    }
+
     aoEscolherFicheiro(evento: Event): void {
         const input = evento.target as HTMLInputElement;
         const ficheiro = input.files?.[0] ?? null;
@@ -64,14 +69,14 @@ export class ProdutoForm {
                 nome: valores.nome!,
                 descricao: valores.descricao!,
                 preco: Number(valores.preco),
-                telefone: valores.telefone,
+                telefone: valores.telefone || undefined,
                 whatsapp: valores.whatsapp || undefined,
                 facebook: valores.facebook || undefined,
                 imagem: this.ficheiroImagem()!
             })
             .subscribe({
                 next: () => this.router.navigate(['/dashboard']),
-                error: (err) => {
+                error: (err: any) => {
                     this.aEnviar.set(false);
                     this.mensagemErro.set(err.error?.message || 'Não foi possível criar o produto. Confere os dados.');
                 },
