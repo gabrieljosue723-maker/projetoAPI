@@ -13,5 +13,8 @@ import { Footer } from './shared/footer/footer';
 export class App {
   protected readonly title = 'Usados Úteis';
   private readonly router = inject(Router);
-  readonly esconderLayout = computed(() => this.router.url === '/login');
+  readonly esconderLayout = computed(() => {
+    const url = this.router.url;
+    return url === '/login' || url.startsWith('/login/');
+  });
 }
