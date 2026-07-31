@@ -6,9 +6,16 @@ export interface UsuarioDoProdto {
 
 export interface Produto {
     id: number;
-    user: UsuarioDoProdto;
     nome: string;
     descricao: string;
     preco: number;
     imagem: string;
+    telefone?: string;    
+    whatsapp?: string;      
+    facebook?: string; 
+    user: {
+        id: number;
+        name: string;
+    };
+    created_at: string;
 }
