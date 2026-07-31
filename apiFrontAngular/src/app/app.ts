@@ -1,8 +1,7 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, computed, inject } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { Navbar } from './shared/navbar/navbar';
 import { Footer } from './shared/footer/footer';
-
 
 @Component({
   selector: 'app-root',
@@ -12,5 +11,7 @@ import { Footer } from './shared/footer/footer';
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('Usados Úteis');
+  protected readonly title = 'Usados Úteis';
+  private readonly router = inject(Router);
+  readonly esconderLayout = computed(() => this.router.url === '/login');
 }
